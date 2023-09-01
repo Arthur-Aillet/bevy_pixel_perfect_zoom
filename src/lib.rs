@@ -301,4 +301,3 @@ pub struct ZoomSettings {
     pub intensity: f32,
     pub position: Vec2,
 }
-

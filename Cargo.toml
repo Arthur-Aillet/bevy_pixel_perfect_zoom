@@ -1,5 +1,5 @@
 [package]
-name = "bevy-pixel-perfect-zoom"
+name = "bevy_pixel_perfect_zoom"
 version = "0.1.0"
 edition = "2021"
 description = "Pixel perfect zoom post-processing shader"
