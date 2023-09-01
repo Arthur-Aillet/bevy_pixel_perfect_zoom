@@ -2,11 +2,11 @@
 
 ### With:
 
-![](WithPixelate.gif)
+![](assets/WithPixelate.gif)
 
 ### Without:
 
-![](WithoutPixelate.gif)
+![](assets/WithoutPixelate.gif)
 
 2D Pixel Perfect post-processing shader for bevy. Zoom in the image with a shader to let the nearest-neighbor interpolation keep your image pixelated.
 
