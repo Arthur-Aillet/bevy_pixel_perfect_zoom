@@ -1,1 +1,1 @@
-# bevy-pixel-perfect-zoom
+# bevy_pixel_perfect_zoom

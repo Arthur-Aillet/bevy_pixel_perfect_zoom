@@ -25,9 +25,9 @@ use bevy::{
 };
 
 /// It is generally encouraged to set up post processing effects as a plugin
-pub struct ZoomPlugin;
+pub struct PixelPerfectZoomPlugin;
 
-impl Plugin for ZoomPlugin {
+impl Plugin for PixelPerfectZoomPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins((
             // The settings will be a component that lives in the main world but will
@@ -36,11 +36,11 @@ impl Plugin for ZoomPlugin {
             // This plugin will take care of extracting it automatically.
             // It's important to derive [`ExtractComponent`] on [`ZoomingSettings`]
             // for this plugin to work correctly.
-            ExtractComponentPlugin::<ZoomSettings>::default(),
+            ExtractComponentPlugin::<PixelPerfectZoomSettings>::default(),
             // The settings will also be the data used in the shader.
             // This plugin will prepare the component for the GPU by creating a uniform buffer
             // and writing the data to that buffer every frame.
-            UniformComponentPlugin::<ZoomSettings>::default(),
+            UniformComponentPlugin::<PixelPerfectZoomSettings>::default(),
         ));
 
         // We need to get the render app from the main app
@@ -136,7 +136,7 @@ impl ViewNode for ZoomNode {
         };
 
         // Get the settings uniform binding
-        let settings_uniforms = world.resource::<ComponentUniforms<ZoomSettings>>();
+        let settings_uniforms = world.resource::<ComponentUniforms<PixelPerfectZoomSettings>>();
         let Some(settings_binding) = settings_uniforms.uniforms().binding() else {
             return Ok(());
         };
@@ -246,7 +246,7 @@ impl FromWorld for ZoomPipeline {
                     ty: BindingType::Buffer {
                         ty: bevy::render::render_resource::BufferBindingType::Uniform,
                         has_dynamic_offset: false,
-                        min_binding_size: Some(ZoomSettings::min_size()),
+                        min_binding_size: Some(PixelPerfectZoomSettings::min_size()),
                     },
                     count: None,
                 },
@@ -297,7 +297,7 @@ impl FromWorld for ZoomPipeline {
 
 // This is the component that will get passed to the shader
 #[derive(Component, Default, Clone, Copy, ExtractComponent, ShaderType)]
-pub struct ZoomSettings {
+pub struct PixelPerfectZoomSettings {
     pub intensity: f32,
     pub position: Vec2,
 }
