@@ -1,8 +1,18 @@
 # bevy_pixel_perfect_zoom
 
+### With:
+
+![](WithPixelate.gif)
+
+### Without:
+
+![](WithoutPixelate.gif)
+
 2D Pixel Perfect post-processing shader for bevy. Zoom in the image with a shader to let the nearest-neighbor interpolation keep your image pixelated.
 
 This is my first rust crate, please be understanding.
+
+Look at my game [HyperBlast](https://github.com/Arthur-Aillet/HyperBlast) using this crate to test the result.
 
 ## Installation
 
