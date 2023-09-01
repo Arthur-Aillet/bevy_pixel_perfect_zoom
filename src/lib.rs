@@ -21,14 +21,24 @@ use bevy::{
         texture::BevyDefault,
         view::ViewTarget,
         RenderApp,
-    },
+    }, asset::load_internal_asset, reflect::TypeUuid,
 };
 
 /// It is generally encouraged to set up post processing effects as a plugin
 pub struct PixelPerfectZoomPlugin;
 
+pub const ZOOM_SHADER_HANDLE: HandleUntyped =
+    HandleUntyped::weak_from_u64(Shader::TYPE_UUID, 11079727377321826659);
+
 impl Plugin for PixelPerfectZoomPlugin {
     fn build(&self, app: &mut App) {
+        load_internal_asset!(
+            app,
+            ZOOM_SHADER_HANDLE,
+            "zoom.wgsl",
+            Shader::from_wgsl
+        );
+
         app.add_plugins((
             // The settings will be a component that lives in the main world but will
             // be extracted to the render world every frame.
@@ -257,7 +267,7 @@ impl FromWorld for ZoomPipeline {
         let sampler = render_device.create_sampler(&SamplerDescriptor::default());
 
         // Get the shader handle
-        let shader = world.resource::<AssetServer>().load("shaders/zoom.wgsl");
+        //let shader = world.resource::<AssetServer>().load("shaders/zoom.wgsl");
 
         let pipeline_id = world
             .resource_mut::<PipelineCache>()
@@ -268,7 +278,7 @@ impl FromWorld for ZoomPipeline {
                 // This will setup a fullscreen triangle for the vertex state
                 vertex: fullscreen_shader_vertex_state(),
                 fragment: Some(FragmentState {
-                    shader,
+                    shader: ZOOM_SHADER_HANDLE.typed().into(),
                     shader_defs: vec![],
                     // Make sure this matches the entry point of your shader.
                     // It can be anything as long as it matches here and in the shader.
